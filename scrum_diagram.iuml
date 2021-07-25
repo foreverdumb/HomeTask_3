@@ -1,0 +1,20 @@
+@startuml
+[*] --> To_do
+To_do : Task
+In_progress : Task
+To_do -> In_progress : Developing 
+Test : Task
+In_progress -> Test : Ready for testing
+state "Done(Test)" as FailedFalse
+state "Fix(Bugs)" as FailedTrue
+FailedFalse : Test
+FailedTrue : Bug
+state c <<choice>> 
+Test --> c : Tested
+c --> FailedTrue : [test == false]
+c --> FailedFalse : [test == true]
+FailedTrue -> In_progress
+Done : Task
+FailedFalse -> Done : Releasing
+Done --> [*]
+@enduml
